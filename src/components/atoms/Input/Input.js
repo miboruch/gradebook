@@ -11,16 +11,17 @@ const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   flex-direction: row;
   border-radius: 20px;
   transition: all 0.4s ease;
+
   ${({ theme }) => theme.mq.tablet} {
     width: 550px;
   }
+
   ${({ theme }) => theme.mq.standard} {
     width: 450px;
-    margin-top: 0;
   }
 `;
 
@@ -34,7 +35,7 @@ const StyledInput = styled.input`
   color: ${({ theme }) => theme.color.fontColor};
   font-family: 'Gilroy';
   &::placeholder {
-    font-size: 15px;
+    font-size: 13px;
     position: absolute;
     color: #c9c9c9;
   }
@@ -43,18 +44,28 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ type, handleChange, handleBlur }) => {
+const Input = ({ type, value, name, handleChange, handleBlur, placeholder }) => {
   return (
     <InputWrapper>
-      <StyledInput type={type} onChange={handleChange} onBlur={handleBlur} />
+      <StyledInput
+        type={type}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={value}
+        name={name}
+        placeholder={placeholder}
+      />
     </InputWrapper>
   );
 };
 
 Input.propTypes = {
-  type: PropTypes.string,
-  handleChange: PropTypes.func,
-  handleBlur: PropTypes.func
+  type: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 };
 
 export default Input;
