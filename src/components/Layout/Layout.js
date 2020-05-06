@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { theme } from '../../style/theme';
 import GlobalStyle from '../../style/GlobalStyle';
 import SEO from '../SEO';
+import Hamburger from '../atoms/Hamburger/Hamburger';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -24,7 +25,10 @@ const Layout = ({ children }) => {
       <SEO />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <StyledWrapper>{children}</StyledWrapper>
+        <StyledWrapper>
+          <Hamburger />
+          {children}
+        </StyledWrapper>
       </ThemeProvider>
     </>
   );

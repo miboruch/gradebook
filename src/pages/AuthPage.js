@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Layout from '../components/Layout/Layout';
 
 const AuthPage = ({ isRegister }) => {
-  return <div>{isRegister ? <h1>Register</h1> : <h1>Login</h1>}</div>;
+  return <Layout>{isRegister ? <h1>Register</h1> : <h1>Login</h1>}</Layout>;
 };
 
 AuthPage.propTypes = {

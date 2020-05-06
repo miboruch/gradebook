@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { toggleMenu } from '../../../actions/toggleActions';
 
 const StyledHamburger = styled.button`
   cursor: pointer;
@@ -63,10 +65,10 @@ const InnerHamburger = styled.div`
   }
 `;
 
-const Hamburger = ({ isOpen, toggle }) => {
+const Hamburger = ({ isMenuOpen, toggleMenu }) => {
   return (
-    <StyledHamburger onClick={() => toggle()}>
-      <InnerHamburger isOpen={isOpen} />
+    <StyledHamburger onClick={() => toggleMenu()}>
+      <InnerHamburger isOpen={isMenuOpen} />
     </StyledHamburger>
   );
 };
@@ -76,4 +78,14 @@ Hamburger.propTypes = {
   toggle: PropTypes.func.isRequired
 };
 
-export default Hamburger;
+const mapStateToProps = ({ toggleReducer: { isMenuOpen } }) => {
+  return { isMenuOpen };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleMenu: () => dispatch(toggleMenu())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Hamburger);
