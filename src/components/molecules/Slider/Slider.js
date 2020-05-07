@@ -29,10 +29,10 @@ const StyledWrapper = styled.div`
   ${({ theme }) => theme.mq.tablet} {
     width: 70%;
   }
-  ${({ theme }) => theme.mq.standard} {
+  ${({ theme }) => theme.mq.desktop} {
     transform: translateX(0);
     position: static;
-    width: 400px;
+    width: 380px;
     padding-top: 4.3rem;
   }
 `;

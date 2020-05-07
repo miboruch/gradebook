@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import Input from './components/atoms/Input/Input';
 import AuthPage from './pages/AuthPage';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
+  const [isStudent, setIsStudent] = useState(true);
   return (
     <Router>
       <Layout>
         <Switch>
-          {!isLogged && (
+          <Route exact path={'/'} component={LandingPage} />
+          {isLogged ? (
             <>
-              <Route path={'/login'} component={AuthPage} />
-              <Route
-                path={'/register'}
-                render={(props) => <AuthPage {...props} isRegister={true} />}
-              />
+              {isStudent ? (
+                <Route path={'/student/:id'} component={LandingPage} />
+              ) : (
+                <>
+                  <Route path={'/:universityID'} component={LandingPage} />
+                </>
+              )}
             </>
+          ) : (
+            <Route path={'/login'} component={AuthPage} />
           )}
         </Switch>
       </Layout>

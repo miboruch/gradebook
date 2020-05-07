@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import Input from '../../atoms/Input/Input';
+import LoginScene from '../../atoms/LoginScene/LoginScene';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -36,7 +37,7 @@ const StyledButton = styled.button`
   height: 40px;
   margin-top: 3rem;
   border: none;
-  background-color: #72b55b;
+  background-color: #2eae83;
   color: #fff;
   font-family: 'Gilroy';
   font-size: 14px;
@@ -50,7 +51,7 @@ const LoginBox = () => {
   return (
     <StyledWrapper>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ login: '', password: '' }}
         onSubmit={(values) => console.log(values)}
       >
         {({ values, handleChange, handleBlur }) => (
@@ -61,8 +62,8 @@ const LoginBox = () => {
               handleBlur={handleBlur}
               type={'text'}
               value={values.email}
-              name={'email'}
-              placeholder={'Email'}
+              name={'login'}
+              placeholder={'login'}
             />
             <Input
               handleChange={handleChange}
@@ -76,6 +77,7 @@ const LoginBox = () => {
           </StyledForm>
         )}
       </Formik>
+      <LoginScene />
     </StyledWrapper>
   );
 };
