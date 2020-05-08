@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import AuthPage from './pages/AuthPage';
+import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
 import StudentPage from './pages/StudentPage';
 
 function App() {
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   const [isStudent, setIsStudent] = useState(true);
   return (
     <Router>
@@ -26,7 +26,7 @@ function App() {
             </>
           ) : (
             <>
-              <Route path={'/login'} component={AuthPage} />
+              <Route path={'/login'} component={LoginPage} />
               <Redirect from='*' to='/login' />
             </>
           )}

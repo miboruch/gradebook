@@ -12,20 +12,12 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const AuthPage = ({ isRegister }) => {
+const LoginPage = () => {
   return (
     <StyledWrapper>
-      {isRegister ? <h1>register</h1> : <LoginBox />}
+      <LoginBox />
     </StyledWrapper>
   );
 };
 
-AuthPage.propTypes = {
-  isRegister: PropTypes.bool
-};
-
-AuthPage.defaultProps = {
-  isRegister: false
-};
-
-export default AuthPage;
+export default LoginPage;

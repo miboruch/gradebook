@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import Input from '../../atoms/Input/Input';
 import LoginScene from '../../atoms/LoginScene/LoginScene';
+import { userLogin } from '../../../actions/authenticationActions';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -47,13 +49,10 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const LoginBox = () => {
+const LoginBox = ({ userLogin }) => {
   return (
     <StyledWrapper>
-      <Formik
-        initialValues={{ login: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
-      >
+      <Formik initialValues={{ login: '', password: '' }} onSubmit={(values) => userLogin(values)}>
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>
             <StyledHeading>Login</StyledHeading>
@@ -82,4 +81,10 @@ const LoginBox = () => {
   );
 };
 
-export default LoginBox;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogin: (values) => dispatch(userLogin(values))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LoginBox);
