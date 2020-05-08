@@ -18,7 +18,7 @@ const StyledHamburger = styled.button`
   :focus {
     outline: none;
   }
-  ${({ theme }) => theme.mq.standard} {
+  ${({ theme }) => theme.mq.desktop} {
     display: none;
   }
 `;

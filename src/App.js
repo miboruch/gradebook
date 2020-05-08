@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Layout from './components/Layout/Layout';
 import AuthPage from './pages/AuthPage';
 import LandingPage from './pages/LandingPage';
+import StudentPage from './pages/StudentPage';
 
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const [isStudent, setIsStudent] = useState(true);
   return (
     <Router>
@@ -16,7 +17,7 @@ function App() {
           {isLogged ? (
             <>
               {isStudent ? (
-                <Route path={'/student/:id'} component={LandingPage} />
+                <Route path={'/student/:id'} component={StudentPage} />
               ) : (
                 <>
                   <Route path={'/:universityID'} component={LandingPage} />
@@ -24,7 +25,10 @@ function App() {
               )}
             </>
           ) : (
-            <Route path={'/login'} component={AuthPage} />
+            <>
+              <Route path={'/login'} component={AuthPage} />
+              <Redirect from='*' to='/login' />
+            </>
           )}
         </Switch>
       </Layout>
