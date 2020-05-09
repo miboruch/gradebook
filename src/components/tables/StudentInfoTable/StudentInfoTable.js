@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Table from '../../molecules/Table/Table';
 import * as TableStyles from '../../../style/tableStyles';
 
@@ -38,10 +37,6 @@ const StudentInfoTable = ({ userInfo }) => {
       {userInfo && <Table data={[userInfo]} columns={columns} isStudentInfoPage={true} />}
     </StyledWrapper>
   );
-};
-
-StudentInfoTable.propTypes = {
-  studentData: PropTypes.array.isRequired
 };
 
 const mapStateToProps = ({ userReducer: { userInfo } }) => {

@@ -231,7 +231,8 @@ const Slider = ({ isMenuOpen, isLoggedIn, userInfo, history, userLogout, toggleM
 
 const mapStateToProps = ({
   toggleReducer: { isMenuOpen },
-  authenticationReducer: { isLoggedIn, userInfo }
+  authenticationReducer: { isLoggedIn },
+  userReducer: { userInfo }
 }) => {
   return { isMenuOpen, isLoggedIn, userInfo };
 };

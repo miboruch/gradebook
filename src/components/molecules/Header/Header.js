@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Input from '../../atoms/Input/Input';
-import Button from '../../atoms/Button/Button';
 import ChartIcon from '../../../assets/icons/chart.svg';
 
 const StyledHeader = styled.header`
@@ -76,21 +75,12 @@ const StyledChatIcon = styled(ChartIcon)`
   transform: translateY(-50%);
 `;
 
-const Header = ({ handleChange, toggleChart, isUserInfoPage, isChartOpen }) => {
+const Header = ({ handleChange }) => {
   return (
     <StyledHeader>
-      {isUserInfoPage ? (
-        <>
-          <Wrapper>
-            <Button onClick={() => toggleChart()}>
-              <StyledChatIcon />
-              {isChartOpen ? 'Zamknij wykres' : 'Otwórz wykres'}
-            </Button>
-          </Wrapper>
-        </>
-      ) : (
-        <p>test</p>
-      )}
+      <Wrapper>
+        {handleChange && <Input name={'filter'} handleChange={handleChange} type={'text'} />}
+      </Wrapper>
       <StyledContentWrapper>
         <StyledInfoBox>
           <StyledParagraph>Państwowa Wyższa Szkoła Zawodowa w Tarnowie</StyledParagraph>
@@ -102,10 +92,7 @@ const Header = ({ handleChange, toggleChart, isUserInfoPage, isChartOpen }) => {
 };
 
 Header.propTypes = {
-  handleChange: PropTypes.func,
-  toggleChart: PropTypes.func,
-  isUserInfoPage: PropTypes.bool,
-  isChartOpen: PropTypes.bool
+  handleChange: PropTypes.func
 };
 
 export default Header;

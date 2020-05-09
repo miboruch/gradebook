@@ -64,7 +64,7 @@ Input.propTypes = {
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func,
   placeholder: PropTypes.string
 };
 

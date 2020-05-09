@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
+import { withRouter } from 'react-router';
 import Input from '../../atoms/Input/Input';
 import LoginScene from '../../atoms/LoginScene/LoginScene';
 import { userLogin } from '../../../actions/authenticationActions';
@@ -55,13 +56,13 @@ const ErrorParagraph = styled.p`
   color: tomato;
 `;
 
-const LoginBox = ({ userLogin, loginError }) => {
+const LoginBox = ({ history, userLogin, loginError }) => {
   return (
     <StyledWrapper>
       <Formik
         initialValues={{ login: '', password: '' }}
         onSubmit={(values, { resetForm }) => {
-          userLogin(values);
+          userLogin(values, history);
           resetForm();
         }}
       >
@@ -100,8 +101,8 @@ const mapStateToProps = ({ authenticationReducer: { loginError } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (values) => dispatch(userLogin(values))
+    userLogin: (values, history) => dispatch(userLogin(values, history))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginBox);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginBox));

@@ -6,7 +6,7 @@ import {
   AUTH_LOGOUT
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
-import { setUserInfoSuccess, getUserInfo } from './userActions';
+import { setUserInfoSuccess, getUserInfo, getStudentGrades } from './userActions';
 
 const authStart = () => {
   return {
@@ -46,21 +46,24 @@ export const authenticationCheck = () => (dispatch) => {
   if (token && userID) {
     dispatch(authSuccess(token, userID));
     dispatch(getUserInfo(userID));
+    dispatch(getStudentGrades(userID));
   }
 };
 
-export const userLogin = (values) => async (dispatch) => {
+export const userLogin = (values, history) => async (dispatch) => {
   dispatch(authStart());
 
   try {
     const { data } = await axios.post(`${API_URL}/user/login`, values);
-    console.log(data);
+
     dispatch(authSuccess(data.token, data.userId));
     const { token, ...rest } = data;
     dispatch(getUserInfo(data.userId));
+    !data.admin && dispatch(getStudentGrades(data.userId));
 
     localStorage.setItem('token', token);
     localStorage.setItem('userID', rest.userId);
+    history.push('/');
   } catch (error) {
     dispatch(authLoginFailure(error));
   }

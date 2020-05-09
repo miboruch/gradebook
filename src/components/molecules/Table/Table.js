@@ -1,7 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 import * as TableStyles from '../../../style/tableStyles';
 import PropTypes from 'prop-types';
 import { useTable } from 'react-table';
+
+const StyledParagraph = styled.p`
+  font-size: 18px;
+  letter-spacing: 1px;
+`;
 
 const Table = ({ data, columns, isStudentInfoPage }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
@@ -22,22 +28,28 @@ const Table = ({ data, columns, isStudentInfoPage }) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, index) => {
-          prepareRow(row);
-          return (
-            <>
-              <TableStyles.StyledTableRow {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <TableStyles.StyledTd {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </TableStyles.StyledTd>
-                  );
-                })}
-              </TableStyles.StyledTableRow>
-            </>
-          );
-        })}
+        {data.length === 0 ? (
+          <StyledParagraph>Brak</StyledParagraph>
+        ) : (
+          <>
+            {rows.map((row, index) => {
+              prepareRow(row);
+              return (
+                <>
+                  <TableStyles.StyledTableRow {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <TableStyles.StyledTd {...cell.getCellProps()}>
+                          {cell.render('Cell')}
+                        </TableStyles.StyledTd>
+                      );
+                    })}
+                  </TableStyles.StyledTableRow>
+                </>
+              );
+            })}
+          </>
+        )}
       </tbody>
     </TableStyles.StyledTable>
   );
