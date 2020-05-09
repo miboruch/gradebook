@@ -5,7 +5,7 @@ import PresenceIcon from '../assets/icons/checked.svg';
 import AbsenceIcon from '../assets/icons/ban.svg';
 
 export const TableWrapperStyle = styled.div`
-  background-color: ${({ theme }) => '#f3f3f3'};
+  background-color: #fff;
   padding: 1rem;
   margin-top: 2rem;
   overflow-y: scroll;
@@ -25,7 +25,7 @@ export const StyledTable = styled.table`
   font-size: 13px;
 
   ${({ theme }) => theme.mq.standard} {
-    font-size: ${({ isStudentInfoPage }) => (isStudentInfoPage ? '24px' : '14px')};
+    font-size: ${({ isStudentInfoPage }) => (isStudentInfoPage ? '20px' : '14px')};
   }
 `;
 

@@ -9,6 +9,7 @@ import StudentPage from './pages/StudentPage';
 import { authenticationCheck } from './actions/authenticationActions';
 import UniversitiesPage from './pages/UniversitiesPage';
 import Spinner from './components/atoms/Spinner/Spinner';
+import StudentInfoPage from './pages/StudentInfoPage';
 
 const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
   useEffect(() => {
@@ -30,7 +31,7 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
                     <Route path={'/'} component={UniversitiesPage} />
                   ) : (
                     <>
-                      <Route path={'/'} component={StudentPage} />
+                      <Route path={'/'} component={StudentInfoPage} />
                     </>
                   )}
                 </>

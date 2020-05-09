@@ -3,11 +3,10 @@ import {
   AUTH_START,
   AUTH_SUCCESS,
   AUTH_LOGIN_FAILURE,
-  AUTH_LOGOUT,
-  SET_USER_INFO,
-  SET_USER_INFO_ERROR
+  AUTH_LOGOUT
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
+import { setUserInfoSuccess, getUserInfo } from './userActions';
 
 const authStart = () => {
   return {
@@ -40,30 +39,6 @@ const authLogout = () => {
   };
 };
 
-const setUserInfoSuccess = (info) => {
-  return {
-    type: SET_USER_INFO,
-    payload: info
-  };
-};
-
-const setUserInfoError = (error) => {
-  return {
-    type: SET_USER_INFO_ERROR,
-    payload: error
-  };
-};
-
-export const getUserInfo = (userID) => async (dispatch) => {
-  try {
-    const { data } = await axios.get(`${API_URL}/user/findUser/${userID}`);
-
-    dispatch(setUserInfoSuccess(data));
-  } catch (error) {
-    dispatch(setUserInfoError(error));
-  }
-};
-
 export const authenticationCheck = () => (dispatch) => {
   const token = localStorage.getItem('token');
   const userID = localStorage.getItem('userID');
@@ -82,7 +57,7 @@ export const userLogin = (values) => async (dispatch) => {
     console.log(data);
     dispatch(authSuccess(data.token, data.userId));
     const { token, ...rest } = data;
-    dispatch(setUserInfoSuccess(rest));
+    dispatch(getUserInfo(data.userId));
 
     localStorage.setItem('token', token);
     localStorage.setItem('userID', rest.userId);
@@ -96,5 +71,6 @@ export const userLogout = (history) => (dispatch) => {
   localStorage.removeItem('token');
   localStorage.removeItem('userID');
   dispatch(authLogout());
+  dispatch(setUserInfoSuccess(null));
   history.push('/');
 };
