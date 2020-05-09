@@ -91,9 +91,10 @@ export const userLogin = (values) => async (dispatch) => {
   }
 };
 
-export const userLogout = () => (dispatch) => {
+export const userLogout = (history) => (dispatch) => {
   dispatch(authStart());
   localStorage.removeItem('token');
   localStorage.removeItem('userID');
   dispatch(authLogout());
+  history.push('/');
 };

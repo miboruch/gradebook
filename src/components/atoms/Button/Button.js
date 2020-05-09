@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { toggleMenu } from '../../../actions/toggleActions';
 
 const StyledButton = styled.button`
   width: 230px;
@@ -73,9 +75,15 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, onClick, isMenu }) => {
+const Button = ({ children, onClick, isMenu, toggleMenu }) => {
   return (
-    <StyledButton onClick={onClick} isMenuButton={isMenu}>
+    <StyledButton
+      onClick={() => {
+        onClick && onClick();
+        isMenu && toggleMenu();
+      }}
+      isMenuButton={isMenu}
+    >
       {children}
     </StyledButton>
   );
@@ -91,4 +99,10 @@ Button.defaultProps = {
   isMenu: false
 };
 
-export default Button;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleMenu: () => dispatch(toggleMenu())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Button);

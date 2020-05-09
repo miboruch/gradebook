@@ -8,8 +8,9 @@ import LandingPage from './pages/LandingPage';
 import StudentPage from './pages/StudentPage';
 import { authenticationCheck } from './actions/authenticationActions';
 import UniversitiesPage from './pages/UniversitiesPage';
+import Spinner from './components/atoms/Spinner/Spinner';
 
-const App = ({ authenticationCheck, isLoggedIn, userInfo }) => {
+const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
   useEffect(() => {
     authenticationCheck();
   }, []);
@@ -18,21 +19,27 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo }) => {
     <Router>
       <Layout>
         <Switch>
-          <Route path={'/student/:id'} component={StudentPage} />
-          {isLoggedIn ? (
-            <>
-              {userInfo && userInfo.admin ? (
-                <Route path={'/'} component={UniversitiesPage} />
-              ) : (
-                <>
-                  <Route path={'/'} component={StudentPage} />
-                </>
-              )}
-            </>
+          {isLoading ? (
+            <Spinner />
           ) : (
             <>
-              <Route exact path={'/'} component={LandingPage} />
-              <Route path={'/login'} component={LoginPage} />
+              <Route path={'/student/:id'} component={StudentPage} />
+              {isLoggedIn ? (
+                <>
+                  {userInfo && userInfo.admin ? (
+                    <Route path={'/'} component={UniversitiesPage} />
+                  ) : (
+                    <>
+                      <Route path={'/'} component={StudentPage} />
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Route exact path={'/'} component={LandingPage} />
+                  <Route path={'/login'} component={LoginPage} />
+                </>
+              )}
             </>
           )}
         </Switch>
@@ -41,8 +48,8 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo }) => {
   );
 };
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo } }) => {
-  return { isLoggedIn, userInfo };
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo, isLoading } }) => {
+  return { isLoggedIn, userInfo, isLoading };
 };
 
 const mapDispatchToProps = (dispatch) => {

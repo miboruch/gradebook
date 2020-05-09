@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import Button from '../../atoms/Button/Button';
 import { ReactComponent as UserIcon } from '../../../assets/icons/user.svg';
 import { ReactComponent as ClipboardIcon } from '../../../assets/icons/clipboard.svg';
 import { ReactComponent as SlideShowIcon } from '../../../assets/icons/slideshow.svg';
 import { ReactComponent as PageIcon } from '../../../assets/icons/page.svg';
+import { userLogout } from '../../../actions/authenticationActions';
+import { toggleMenu } from '../../../actions/toggleActions';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -27,12 +30,13 @@ const StyledWrapper = styled.div`
   overflow: hidden;
 
   ${({ theme }) => theme.mq.tablet} {
-    width: 70%;
+    width: 450px;
   }
+
   ${({ theme }) => theme.mq.desktop} {
     transform: translateX(0);
     position: static;
-    width: 380px;
+    width: 430px;
     padding-top: 4.3rem;
   }
 `;
@@ -159,17 +163,17 @@ const LogoutButtonWrapper = styled.div`
   left: 0;
 `;
 
-const Slider = ({ isMenuOpen, isLoggedIn, userInfo }) => {
+const Slider = ({ isMenuOpen, isLoggedIn, userInfo, history, userLogout, toggleMenu }) => {
   return (
     <StyledWrapper isOpen={isMenuOpen}>
       <StyledProjectLink to={'/'}>
         <StyledHeading>Technologie obiektowe i komponentowe</StyledHeading>
       </StyledProjectLink>
-      <IconWrapper>
-        <StyledUserIcon />
-      </IconWrapper>
       {userInfo && (
         <>
+          <IconWrapper>
+            <StyledUserIcon />
+          </IconWrapper>
           <StyledNameHeading>
             {userInfo.name} {userInfo.lastName}
           </StyledNameHeading>
@@ -178,38 +182,37 @@ const Slider = ({ isMenuOpen, isLoggedIn, userInfo }) => {
           </StyledDescriptionParagraph>
         </>
       )}
+      <ButtonWrapper>
+        <StyledProjectLink to={'/'}>
+          <Button isMenu={true}>
+            <StyledClipboardIcon />
+            Strona główna
+          </Button>
+        </StyledProjectLink>
+      </ButtonWrapper>
       {isLoggedIn ? (
         <>
           <ButtonWrapper>
-            <StyledProjectLink to={'/'}>
-              <Button isMenu={true}>
-                <StyledClipboardIcon />
-                Lista studentów
-              </Button>
-            </StyledProjectLink>
+            {userInfo && userInfo.admin ? (
+              <StyledProjectLink to={'/'}>
+                <Button isMenu={true}>
+                  <StyledClipboardIcon />
+                  Lista studentów
+                </Button>
+              </StyledProjectLink>
+            ) : (
+              <StyledProjectLink to={'/'}>
+                <Button isMenu={true}>
+                  <StyledClipboardIcon />
+                  Zobacz swoje oceny
+                </Button>
+              </StyledProjectLink>
+            )}
           </ButtonWrapper>
-          <StyledLink
-            href={'https://drive.google.com/drive/folders/1aMv62b4TQYrD8ydSy2DDYXSPglc0YZKm'}
-            rel={'noopener noreferrer'}
-            target={'_blank'}
-          >
-            <Button isMenu={true}>
-              <StyledSlideShowIcon />
-              Laboratoria
-            </Button>
-          </StyledLink>
-          <StyledPageLink
-            href={'http://www.tomaszgadek.com/index.html'}
-            rel={'noopener noreferrer'}
-            target={'_blank'}
-          >
-            <Button isMenu={true}>
-              <StyledPageIcon />
-              Strona internetowa
-            </Button>
-          </StyledPageLink>
           <LogoutButtonWrapper>
-            <Button isMenu={true}>Wyloguj</Button>
+            <Button isMenu={true} onClick={() => userLogout(history)}>
+              Wyloguj
+            </Button>
           </LogoutButtonWrapper>
         </>
       ) : (
@@ -233,4 +236,11 @@ const mapStateToProps = ({
   return { isMenuOpen, isLoggedIn, userInfo };
 };
 
-export default connect(mapStateToProps)(Slider);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogout: (history) => dispatch(userLogout(history)),
+    toggleMenu: () => dispatch(toggleMenu())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Slider));

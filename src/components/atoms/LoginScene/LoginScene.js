@@ -10,7 +10,7 @@ const SceneWrapper = styled.div`
   align-items: center;
   display: none;
 
-  ${({ theme }) => theme.mq.standard} {
+  ${({ theme }) => theme.mq.desktop} {
     display: flex;
   }
 `;

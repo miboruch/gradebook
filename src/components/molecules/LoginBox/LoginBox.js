@@ -10,6 +10,7 @@ const StyledWrapper = styled.section`
   width: 90%;
   height: 95vh;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `;

@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
         <StyledWrapper>
           <Hamburger />
           <Slider />
-          {children}
+          <ContentWrapper>{children}</ContentWrapper>
         </StyledWrapper>
       </ThemeProvider>
     </>
