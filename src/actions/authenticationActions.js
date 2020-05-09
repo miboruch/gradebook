@@ -34,7 +34,7 @@ const authLoginFailure = (error) => {
   };
 };
 
-const userLogout = () => {
+const authLogout = () => {
   return {
     type: AUTH_LOGOUT
   };
@@ -54,18 +54,46 @@ const setUserInfoError = (error) => {
   };
 };
 
+export const getUserInfo = (userID) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/user/findUser/${userID}`);
+
+    dispatch(setUserInfoSuccess(data));
+  } catch (error) {
+    dispatch(setUserInfoError(error));
+  }
+};
+
+export const authenticationCheck = () => (dispatch) => {
+  const token = localStorage.getItem('token');
+  const userID = localStorage.getItem('userID');
+
+  if (token && userID) {
+    dispatch(authSuccess(token, userID));
+    dispatch(getUserInfo(userID));
+  }
+};
+
 export const userLogin = (values) => async (dispatch) => {
   dispatch(authStart());
 
   try {
     const { data } = await axios.post(`${API_URL}/user/login`, values);
+    console.log(data);
     dispatch(authSuccess(data.token, data.userId));
-    const { token, userId, ...rest } = data;
+    const { token, ...rest } = data;
     dispatch(setUserInfoSuccess(rest));
 
     localStorage.setItem('token', token);
-    localStorage.setItem('userID', userId);
+    localStorage.setItem('userID', rest.userId);
   } catch (error) {
     dispatch(authLoginFailure(error));
   }
+};
+
+export const userLogout = () => (dispatch) => {
+  dispatch(authStart());
+  localStorage.removeItem('token');
+  localStorage.removeItem('userID');
+  dispatch(authLogout());
 };

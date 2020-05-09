@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleMenu } from '../../../actions/toggleActions';
 
@@ -71,11 +70,6 @@ const Hamburger = ({ isMenuOpen, toggleMenu }) => {
       <InnerHamburger isOpen={isMenuOpen} />
     </StyledHamburger>
   );
-};
-
-Hamburger.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ toggleReducer: { isMenuOpen } }) => {

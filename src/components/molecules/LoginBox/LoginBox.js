@@ -49,10 +49,21 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const LoginBox = ({ userLogin }) => {
+const ErrorParagraph = styled.p`
+  font-size: 11px;
+  color: tomato;
+`;
+
+const LoginBox = ({ userLogin, loginError }) => {
   return (
     <StyledWrapper>
-      <Formik initialValues={{ login: '', password: '' }} onSubmit={(values) => userLogin(values)}>
+      <Formik
+        initialValues={{ login: '', password: '' }}
+        onSubmit={(values, { resetForm }) => {
+          userLogin(values);
+          resetForm();
+        }}
+      >
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>
             <StyledHeading>Login</StyledHeading>
@@ -60,7 +71,7 @@ const LoginBox = ({ userLogin }) => {
               handleChange={handleChange}
               handleBlur={handleBlur}
               type={'text'}
-              value={values.email}
+              value={values.login}
               name={'login'}
               placeholder={'login'}
             />
@@ -73,6 +84,7 @@ const LoginBox = ({ userLogin }) => {
               placeholder={'Password'}
             />
             <StyledButton>Submit</StyledButton>
+            {loginError && <ErrorParagraph>Błędny login lub hasło</ErrorParagraph>}
           </StyledForm>
         )}
       </Formik>
@@ -81,10 +93,14 @@ const LoginBox = ({ userLogin }) => {
   );
 };
 
+const mapStateToProps = ({ authenticationReducer: { loginError } }) => {
+  return { loginError };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     userLogin: (values) => dispatch(userLogin(values))
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginBox);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginBox);

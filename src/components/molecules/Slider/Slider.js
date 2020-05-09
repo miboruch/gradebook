@@ -152,51 +152,85 @@ const StyledProjectLink = styled(Link)`
   color: #fff;
 `;
 
-const Slider = ({ isMenuOpen }) => {
+const LogoutButtonWrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`;
+
+const Slider = ({ isMenuOpen, isLoggedIn, userInfo }) => {
   return (
     <StyledWrapper isOpen={isMenuOpen}>
       <StyledProjectLink to={'/'}>
-        <StyledHeading>Testowanie i jakość oprogramowania</StyledHeading>
+        <StyledHeading>Technologie obiektowe i komponentowe</StyledHeading>
       </StyledProjectLink>
       <IconWrapper>
         <StyledUserIcon />
       </IconWrapper>
-      <StyledNameHeading>Tomasz Gądek</StyledNameHeading>
-      <StyledDescriptionParagraph>Java specialist</StyledDescriptionParagraph>
-      <ButtonWrapper>
-        <StyledProjectLink to={'/'}>
-          <Button isMenu={true}>
-            <StyledClipboardIcon />
-            Lista studentów
-          </Button>
-        </StyledProjectLink>
-      </ButtonWrapper>
-      <StyledLink
-        href={'https://drive.google.com/drive/folders/1aMv62b4TQYrD8ydSy2DDYXSPglc0YZKm'}
-        rel={'noopener noreferrer'}
-        target={'_blank'}
-      >
-        <Button isMenu={true}>
-          <StyledSlideShowIcon />
-          Laboratoria
-        </Button>
-      </StyledLink>
-      <StyledPageLink
-        href={'http://www.tomaszgadek.com/index.html'}
-        rel={'noopener noreferrer'}
-        target={'_blank'}
-      >
-        <Button isMenu={true}>
-          <StyledPageIcon />
-          Strona internetowa
-        </Button>
-      </StyledPageLink>
+      {userInfo && (
+        <>
+          <StyledNameHeading>
+            {userInfo.name} {userInfo.lastName}
+          </StyledNameHeading>
+          <StyledDescriptionParagraph>
+            {userInfo.admin ? 'Wykładowca' : 'Student'}
+          </StyledDescriptionParagraph>
+        </>
+      )}
+      {isLoggedIn ? (
+        <>
+          <ButtonWrapper>
+            <StyledProjectLink to={'/'}>
+              <Button isMenu={true}>
+                <StyledClipboardIcon />
+                Lista studentów
+              </Button>
+            </StyledProjectLink>
+          </ButtonWrapper>
+          <StyledLink
+            href={'https://drive.google.com/drive/folders/1aMv62b4TQYrD8ydSy2DDYXSPglc0YZKm'}
+            rel={'noopener noreferrer'}
+            target={'_blank'}
+          >
+            <Button isMenu={true}>
+              <StyledSlideShowIcon />
+              Laboratoria
+            </Button>
+          </StyledLink>
+          <StyledPageLink
+            href={'http://www.tomaszgadek.com/index.html'}
+            rel={'noopener noreferrer'}
+            target={'_blank'}
+          >
+            <Button isMenu={true}>
+              <StyledPageIcon />
+              Strona internetowa
+            </Button>
+          </StyledPageLink>
+          <LogoutButtonWrapper>
+            <Button isMenu={true}>Wyloguj</Button>
+          </LogoutButtonWrapper>
+        </>
+      ) : (
+        <ButtonWrapper>
+          <StyledProjectLink to={'/login'}>
+            <Button isMenu={true}>
+              <StyledClipboardIcon />
+              Zaloguj się
+            </Button>
+          </StyledProjectLink>
+        </ButtonWrapper>
+      )}
     </StyledWrapper>
   );
 };
 
-const mapStateToProps = ({ toggleReducer: { isMenuOpen } }) => {
-  return { isMenuOpen };
+const mapStateToProps = ({
+  toggleReducer: { isMenuOpen },
+  authenticationReducer: { isLoggedIn, userInfo }
+}) => {
+  return { isMenuOpen, isLoggedIn, userInfo };
 };
 
 export default connect(mapStateToProps)(Slider);
