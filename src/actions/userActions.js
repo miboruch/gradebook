@@ -1,11 +1,18 @@
 import axios from 'axios';
 import {
+  FETCH_START,
   SET_USER_INFO,
   SET_USER_INFO_ERROR,
   SET_USER_GRADES,
   SET_USER_GRADES_ERROR
 } from '../reducers/userReducer';
 import { API_URL } from '../utils/helpers';
+
+const fetchStart = () => {
+  return {
+    type: FETCH_START
+  };
+};
 
 export const setUserInfoSuccess = (info) => {
   return {
@@ -36,6 +43,7 @@ const setUserGradesError = (error) => {
 };
 
 export const getUserInfo = (userID) => async (dispatch) => {
+  dispatch(fetchStart());
   try {
     const { data } = await axios.get(`${API_URL}/user/findUser/${userID}`);
 

@@ -8,9 +8,7 @@ const initialState = {
   token: null,
   userID: null,
   loginError: null,
-  userInfoError: null,
-  isLoading: false,
-  userInfo: null
+  isLoading: false
 };
 
 export const authenticationReducer = (state = initialState, action) => {

@@ -28,10 +28,10 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
               {isLoggedIn ? (
                 <>
                   {userInfo && userInfo.admin ? (
-                    <Route path={'/'} component={UniversitiesPage} />
+                    <Route exact path={'/'} component={UniversitiesPage} />
                   ) : (
                     <>
-                      <Route path={'/'} component={StudentInfoPage} />
+                      <Route exact path={'/'} component={StudentInfoPage} />
                     </>
                   )}
                 </>

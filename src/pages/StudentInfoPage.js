@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import StudentInfoTable from '../components/tables/StudentInfoTable/StudentInfoTable';
 import Header from '../components/molecules/Header/Header';
 import StudentGradesTable from '../components/tables/StudentGradesTable/StudentGradesTable';
@@ -12,14 +13,18 @@ const StyledWrapper = styled.div`
   background-color: #fbfbfb;
 `;
 
-const StudentInfoPage = () => {
+const StudentInfoPage = ({ userInfo }) => {
   return (
     <StyledWrapper>
       <Header />
-      <StudentInfoTable />
+      <StudentInfoTable data={[userInfo]} />
       <StudentGradesTable />
     </StyledWrapper>
   );
 };
 
-export default StudentInfoPage;
+const mapStateToProps = ({ userReducer: { userInfo } }) => {
+  return { userInfo };
+};
+
+export default connect(mapStateToProps)(StudentInfoPage);

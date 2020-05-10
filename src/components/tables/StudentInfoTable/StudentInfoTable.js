@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Table from '../../molecules/Table/Table';
 import * as TableStyles from '../../../style/tableStyles';
@@ -8,7 +9,7 @@ const StyledWrapper = styled(TableStyles.TableWrapperStyle)`
   width: 95%;
 `;
 
-const StudentInfoTable = ({ userInfo }) => {
+const StudentInfoTable = ({ data }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -34,13 +35,13 @@ const StudentInfoTable = ({ userInfo }) => {
 
   return (
     <StyledWrapper>
-      {userInfo && <Table data={[userInfo]} columns={columns} isStudentInfoPage={true} />}
+      {data && <Table data={data} columns={columns} isStudentInfoPage={true} />}
     </StyledWrapper>
   );
 };
 
-const mapStateToProps = ({ userReducer: { userInfo } }) => {
-  return { userInfo };
+StudentInfoTable.propTypes = {
+  data: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(StudentInfoTable);
+export default StudentInfoTable;
