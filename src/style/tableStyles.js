@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import UserIcon from '../assets/icons/user.svg';
 import ArrowIcon from '../assets/icons/arrow_half.svg';
 import PresenceIcon from '../assets/icons/checked.svg';

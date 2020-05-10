@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Table from '../../molecules/Table/Table';
 import * as TableStyles from '../../../style/tableStyles';
 
