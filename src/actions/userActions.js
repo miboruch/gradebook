@@ -53,7 +53,7 @@ export const getUserInfo = (userID) => async (dispatch) => {
   }
 };
 
-export const getStudentGrades = (userID) => async (dispatch) => {
+export const getUserGrades = (userID) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${API_URL}/grades/findStudentGrades/${userID}`);
 

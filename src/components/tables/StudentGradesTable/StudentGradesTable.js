@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as TableStyles from '../../../style/tableStyles';
 import Table from '../../molecules/Table/Table';
 
@@ -8,7 +8,7 @@ const StyledWrapper = styled(TableStyles.TableWrapperStyle)`
   width: 95%;
 `;
 
-const StudentGradesTable = ({ userGrades }) => {
+const StudentGradesTable = ({ data }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -25,13 +25,11 @@ const StudentGradesTable = ({ userGrades }) => {
     []
   );
 
-  return (
-    <StyledWrapper>{userGrades && <Table data={userGrades} columns={columns} />}</StyledWrapper>
-  );
+  return <StyledWrapper>{data && <Table data={data} columns={columns} />}</StyledWrapper>;
 };
 
-const mapStateToProps = ({ userReducer: { userGrades } }) => {
-  return { userGrades };
+StudentGradesTable.propTypes = {
+  data: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(StudentGradesTable);
+export default StudentGradesTable;

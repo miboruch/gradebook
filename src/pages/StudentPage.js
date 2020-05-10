@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getStudentGrades, getUserInfo } from '../actions/userActions';
+import { getStudentInfo, getStudentGrades } from '../actions/studentActions';
 import Spinner from '../components/atoms/Spinner/Spinner';
 import Header from '../components/molecules/Header/Header';
 import StudentInfoTable from '../components/tables/StudentInfoTable/StudentInfoTable';
@@ -14,7 +14,14 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StudentPage = ({ match, getUserInfo, getStudentGrades, isLoading, userInfo }) => {
+const StudentPage = ({
+  match,
+  getUserInfo,
+  getStudentGrades,
+  isLoading,
+  studentInfo,
+  studentGrades
+}) => {
   useEffect(() => {
     getUserInfo(match.params.id);
     getStudentGrades(match.params.id);
@@ -26,11 +33,11 @@ const StudentPage = ({ match, getUserInfo, getStudentGrades, isLoading, userInfo
         <Spinner />
       ) : (
         <>
-          {userInfo && (
+          {studentInfo && (
             <>
               <Header />
-              <StudentInfoTable data={[userInfo]} />
-              <StudentGradesTable />
+              <StudentInfoTable data={[studentInfo]} />
+              <StudentGradesTable data={studentGrades} />
             </>
           )}
         </>
@@ -39,13 +46,13 @@ const StudentPage = ({ match, getUserInfo, getStudentGrades, isLoading, userInfo
   );
 };
 
-const mapStateToProps = ({ userReducer: { isLoading, userInfo } }) => {
-  return { isLoading, userInfo };
+const mapStateToProps = ({ studentReducer: { isLoading, studentInfo, studentGrades } }) => {
+  return { isLoading, studentInfo, studentGrades };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserInfo: (userID) => dispatch(getUserInfo(userID)),
+    getUserInfo: (userID) => dispatch(getStudentInfo(userID)),
     getStudentGrades: (userID) => dispatch(getStudentGrades(userID))
   };
 };

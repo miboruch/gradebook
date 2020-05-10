@@ -13,18 +13,18 @@ const StyledWrapper = styled.div`
   background-color: #fbfbfb;
 `;
 
-const StudentInfoPage = ({ userInfo }) => {
+const StudentInfoPage = ({ userInfo, userGrades }) => {
   return (
     <StyledWrapper>
       <Header />
       <StudentInfoTable data={[userInfo]} />
-      <StudentGradesTable />
+      <StudentGradesTable data={userGrades} />
     </StyledWrapper>
   );
 };
 
-const mapStateToProps = ({ userReducer: { userInfo } }) => {
-  return { userInfo };
+const mapStateToProps = ({ userReducer: { userInfo, userGrades } }) => {
+  return { userInfo, userGrades };
 };
 
 export default connect(mapStateToProps)(StudentInfoPage);

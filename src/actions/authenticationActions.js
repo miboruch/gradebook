@@ -6,7 +6,7 @@ import {
   AUTH_LOGOUT
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
-import { setUserInfoSuccess, getUserInfo, getStudentGrades } from './userActions';
+import { setUserInfoSuccess, getUserInfo, getUserGrades } from './userActions';
 
 const authStart = () => {
   return {
@@ -46,7 +46,7 @@ export const authenticationCheck = () => (dispatch) => {
   if (token && userID) {
     dispatch(authSuccess(token, userID));
     dispatch(getUserInfo(userID));
-    dispatch(getStudentGrades(userID));
+    dispatch(getUserGrades(userID));
   }
 };
 
@@ -59,7 +59,7 @@ export const userLogin = (values, history) => async (dispatch) => {
     dispatch(authSuccess(data.token, data.userId));
     const { token, ...rest } = data;
     dispatch(getUserInfo(data.userId));
-    !data.admin && dispatch(getStudentGrades(data.userId));
+    !data.admin && dispatch(getUserGrades(data.userId));
 
     localStorage.setItem('token', token);
     localStorage.setItem('userID', rest.userId);
