@@ -24,11 +24,13 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
             <Spinner />
           ) : (
             <>
-              <Route path={'/student/:id'} component={StudentPage} />
               {isLoggedIn ? (
                 <>
                   {userInfo && userInfo.admin ? (
-                    <Route exact path={'/'} component={UniversitiesPage} />
+                    <>
+                      <Route exact path={'/'} component={UniversitiesPage} />
+                      <Route path={'/student/:id'} component={StudentPage} />
+                    </>
                   ) : (
                     <>
                       <Route exact path={'/'} component={StudentInfoPage} />

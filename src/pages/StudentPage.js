@@ -33,7 +33,7 @@ const StudentPage = ({
         <Spinner />
       ) : (
         <>
-          {studentInfo && (
+          {studentInfo && studentGrades && (
             <>
               <Header />
               <StudentInfoTable data={[studentInfo]} />

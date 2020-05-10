@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import StudentInfoTable from '../components/tables/StudentInfoTable/StudentInfoTable';
 import Header from '../components/molecules/Header/Header';
 import StudentGradesTable from '../components/tables/StudentGradesTable/StudentGradesTable';
+import Spinner from '../components/atoms/Spinner/Spinner';
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -13,18 +14,28 @@ const StyledWrapper = styled.div`
   background-color: #fbfbfb;
 `;
 
-const StudentInfoPage = ({ userInfo, userGrades }) => {
+const StudentInfoPage = ({ userInfo, userGrades, isLoading }) => {
   return (
     <StyledWrapper>
-      <Header />
-      <StudentInfoTable data={[userInfo]} />
-      <StudentGradesTable data={userGrades} />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {userInfo && userGrades && (
+            <>
+              <Header />
+              <StudentInfoTable data={[userInfo]} />
+              <StudentGradesTable data={userGrades} />
+            </>
+          )}
+        </>
+      )}
     </StyledWrapper>
   );
 };
 
-const mapStateToProps = ({ userReducer: { userInfo, userGrades } }) => {
-  return { userInfo, userGrades };
+const mapStateToProps = ({ userReducer: { userInfo, userGrades, isLoading } }) => {
+  return { userInfo, userGrades, isLoading };
 };
 
 export default connect(mapStateToProps)(StudentInfoPage);
