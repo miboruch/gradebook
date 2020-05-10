@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getUniversityStudents, setCurrentUniversity } from '../actions/universityActions';
 import Spinner from '../components/atoms/Spinner/Spinner';
+import Header from '../components/molecules/Header/Header';
+import UniversityStudentsTable from '../components/tables/UniversityStudentsTable/UniversityStudentsTable';
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -43,9 +45,9 @@ const UniversityStudentsPage = ({
         <Spinner />
       ) : (
         <>
+          <Header />
           <StyledHeading>{currentUniversity}</StyledHeading>
-          <p>Hello</p>
-          <p>University students</p>
+          <UniversityStudentsTable data={universityStudents} />
         </>
       )}
     </StyledWrapper>

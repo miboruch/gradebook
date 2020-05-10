@@ -17,14 +17,8 @@ const StyledWrapper = styled.div`
 const UniversitiesPage = ({ isLoading, universities, universitiesError }) => {
   return (
     <StyledWrapper>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
-          <Header />
-          <UniversitiesTable data={universities} />
-        </>
-      )}
+      <Header />
+      <UniversitiesTable data={universities} />
     </StyledWrapper>
   );
 };
