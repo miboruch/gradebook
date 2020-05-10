@@ -26,10 +26,10 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
             <>
               {isLoggedIn ? (
                 <>
+                  <Route path={'/student/:id'} component={StudentPage} />
                   {userInfo && userInfo.admin ? (
                     <>
                       <Route exact path={'/'} component={UniversitiesPage} />
-                      <Route path={'/student/:id'} component={StudentPage} />
                     </>
                   ) : (
                     <>
@@ -51,7 +51,10 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
   );
 };
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo, isLoading } }) => {
+const mapStateToProps = ({
+  authenticationReducer: { isLoggedIn, isLoading },
+  userReducer: { userInfo }
+}) => {
   return { isLoggedIn, userInfo, isLoading };
 };
 
