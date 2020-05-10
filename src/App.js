@@ -10,6 +10,7 @@ import { authenticationCheck } from './actions/authenticationActions';
 import UniversitiesPage from './pages/UniversitiesPage';
 import Spinner from './components/atoms/Spinner/Spinner';
 import StudentInfoPage from './pages/StudentInfoPage';
+import UniversityStudentsPage from './pages/UniversityStudentsPage';
 
 const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
   useEffect(() => {
@@ -30,6 +31,7 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
                   {userInfo && userInfo.admin ? (
                     <>
                       <Route exact path={'/'} component={UniversitiesPage} />
+                      <Route exact path={'/university/:id'} component={UniversityStudentsPage} />
                     </>
                   ) : (
                     <>
