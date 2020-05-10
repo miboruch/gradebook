@@ -11,10 +11,13 @@ import UniversitiesPage from './pages/UniversitiesPage';
 import Spinner from './components/atoms/Spinner/Spinner';
 import StudentInfoPage from './pages/StudentInfoPage';
 import UniversityStudentsPage from './pages/UniversityStudentsPage';
+import { getUniversities, getUniversityCourses } from './actions/universityActions';
 
-const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading }) => {
+const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading, getUniversityCourses, getUniversities}) => {
   useEffect(() => {
     authenticationCheck();
+    getUniversityCourses();
+    getUniversities();
   }, []);
 
   return (
@@ -62,7 +65,9 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authenticationCheck: () => dispatch(authenticationCheck())
+    authenticationCheck: () => dispatch(authenticationCheck()),
+    getUniversityCourses: () => dispatch(getUniversityCourses()),
+    getUniversities: () => dispatch(getUniversities())
   };
 };
 

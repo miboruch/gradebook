@@ -5,7 +5,8 @@ import {
   SET_UNIVERSITIES_ERROR,
   SET_UNIVERSITY_STUDENTS,
   SET_UNIVERSITY_STUDENTS_ERROR,
-  SET_CURRENT_UNIVERSITY
+  SET_CURRENT_UNIVERSITY,
+  SET_UNIVERSITY_COURSES
 } from '../reducers/universityReducer';
 import { API_URL } from '../utils/helpers';
 
@@ -43,6 +44,13 @@ const setUniversityStudentsError = (error) => {
   };
 };
 
+const setUniversityCourses = (courses) => {
+  return {
+    type: SET_UNIVERSITY_COURSES,
+    payload: courses
+  };
+};
+
 export const setCurrentUniversity = (university) => {
   return {
     type: SET_CURRENT_UNIVERSITY,
@@ -72,5 +80,15 @@ export const getUniversityStudents = (universityID) => async (dispatch) => {
     dispatch(setUniversityStudents(data));
   } catch (error) {
     dispatch(setUniversityStudentsError(error));
+  }
+};
+
+export const getUniversityCourses = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/courses/findAll`);
+
+    dispatch(setUniversityCourses(data));
+  } catch (error) {
+    console.log(error);
   }
 };

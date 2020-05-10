@@ -14,10 +14,7 @@ const StyledWrapper = styled.div`
   background-color: #fbfbfb;
 `;
 
-const UniversitiesPage = ({ isLoading, universities, universitiesError, getUniversities }) => {
-  useEffect(() => {
-    getUniversities();
-  }, []);
+const UniversitiesPage = ({ isLoading, universities, universitiesError }) => {
   return (
     <StyledWrapper>
       {isLoading ? (
@@ -36,10 +33,4 @@ const mapStateToProps = ({ universityReducer: { isLoading, universities, univers
   return { isLoading, universities, universitiesError };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUniversities: () => dispatch(getUniversities())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UniversitiesPage);
+export default connect(mapStateToProps)(UniversitiesPage);

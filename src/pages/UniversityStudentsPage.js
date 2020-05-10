@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getUniversityStudents } from '../actions/universityActions';
+import { getUniversityStudents, setCurrentUniversity } from '../actions/universityActions';
 import Spinner from '../components/atoms/Spinner/Spinner';
 
 const StyledWrapper = styled.div`
@@ -12,14 +12,30 @@ const StyledWrapper = styled.div`
   background-color: #fbfbfb;
 `;
 
+const StyledHeading = styled.h1`
+  font-size: 28px;
+  color: #2d2d2d;
+`;
+
 const UniversityStudentsPage = ({
   match,
   isLoading,
   universityStudents,
-  getUniversityStudents
+  getUniversityStudents,
+  currentUniversity,
+  setCurrentUniversity,
+  universities
 }) => {
   useEffect(() => {
     getUniversityStudents(match.params.id);
+
+    if (!currentUniversity) {
+      const { universityName } = universities.find(
+        (university) => university.universityId === parseInt(match.params.id)
+      );
+
+      setCurrentUniversity(universityName);
+    }
   }, []);
   return (
     <StyledWrapper>
@@ -27,6 +43,7 @@ const UniversityStudentsPage = ({
         <Spinner />
       ) : (
         <>
+          <StyledHeading>{currentUniversity}</StyledHeading>
           <p>Hello</p>
           <p>University students</p>
         </>
@@ -35,13 +52,16 @@ const UniversityStudentsPage = ({
   );
 };
 
-const mapStateToProps = ({ universityReducer: { isLoading, universityStudents } }) => {
-  return { isLoading, universityStudents };
+const mapStateToProps = ({
+  universityReducer: { isLoading, universityStudents, currentUniversity, universities }
+}) => {
+  return { isLoading, universityStudents, currentUniversity, universities };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUniversityStudents: (universityID) => dispatch(getUniversityStudents(universityID))
+    getUniversityStudents: (universityID) => dispatch(getUniversityStudents(universityID)),
+    setCurrentUniversity: (universityName) => dispatch(setCurrentUniversity(universityName))
   };
 };
 
