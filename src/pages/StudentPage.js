@@ -8,15 +8,18 @@ import StudentInfoTable from '../components/tables/StudentInfoTable/StudentInfoT
 import StudentGradesTable from '../components/tables/StudentGradesTable/StudentGradesTable';
 import Button from '../components/atoms/Button/Button';
 import { ReactComponent as AddIcon } from '../assets/icons/add.svg';
-import CloseButton from '../components/atoms/CloseButton/CloseButton';
 import AddGrade from '../components/molecules/AddGrade/AddGrade';
 
 const StyledWrapper = styled.div`
-  height: 100%;
+  height: calc(100vh - 100px);
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: #fbfbfb;
+
+  ${({ theme }) => theme.mq.standard} {
+    height: calc(100% - 140px);
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -44,29 +47,31 @@ const StudentPage = ({
   }, []);
 
   return (
-    <StyledWrapper>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
-          {studentInfo && studentGrades && (
-            <>
-              <AddGrade setOpen={setOpen} isOpen={isOpen} />
-              <Header>
-                <ButtonWrapper>
-                  <Button onClick={() => setOpen(!isOpen)}>
-                    <StyledAddIcon />
-                    Dodaj ocenę
-                  </Button>
-                </ButtonWrapper>
-              </Header>
-              <StudentInfoTable data={[studentInfo]} />
-              <StudentGradesTable data={studentGrades} />
-            </>
-          )}
-        </>
-      )}
-    </StyledWrapper>
+    <>
+      <Header>
+        <ButtonWrapper>
+          <Button onClick={() => setOpen(!isOpen)}>
+            <StyledAddIcon />
+            Dodaj ocenę
+          </Button>
+        </ButtonWrapper>
+      </Header>
+      <StyledWrapper>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            {studentInfo && studentGrades && (
+              <>
+                <AddGrade setOpen={setOpen} isOpen={isOpen} />
+                <StudentInfoTable data={[studentInfo]} />
+                <StudentGradesTable data={studentGrades} />
+              </>
+            )}
+          </>
+        )}
+      </StyledWrapper>
+    </>
   );
 };
 

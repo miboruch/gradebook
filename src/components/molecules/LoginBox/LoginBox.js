@@ -7,6 +7,7 @@ import Input from '../../atoms/Input/Input';
 import LoginScene from '../../atoms/LoginScene/LoginScene';
 import { userLogin } from '../../../actions/authenticationActions';
 import { LoginSchema } from '../../../utils/schemaValidation';
+import * as FormStyles from '../../../style/sharedStyles';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -31,32 +32,6 @@ const StyledForm = styled(Form)`
   }
 `;
 
-const StyledHeading = styled.h1`
-  font-size: 52px;
-  letter-spacing: 1px;
-  color: #2d2d2d;
-`;
-
-const StyledButton = styled.button`
-  width: 250px;
-  height: 40px;
-  margin-top: 3rem;
-  border: none;
-  background-color: #2eae83;
-  color: #fff;
-  font-family: 'Gilroy';
-  font-size: 14px;
-  letter-spacing: 2px;
-  font-weight: 500;
-  border-radius: 20px;
-  cursor: pointer;
-`;
-
-const ErrorParagraph = styled.p`
-  font-size: 11px;
-  color: tomato;
-`;
-
 const LoginBox = ({ history, userLogin, loginError }) => {
   return (
     <StyledWrapper>
@@ -70,7 +45,7 @@ const LoginBox = ({ history, userLogin, loginError }) => {
       >
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>
-            <StyledHeading>Login</StyledHeading>
+            <FormStyles.StyledHeading>Login</FormStyles.StyledHeading>
             <Input
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -87,8 +62,10 @@ const LoginBox = ({ history, userLogin, loginError }) => {
               name={'password'}
               placeholder={'Password'}
             />
-            <StyledButton>Submit</StyledButton>
-            {loginError && <ErrorParagraph>Błędny login lub hasło</ErrorParagraph>}
+            <FormStyles.StyledButton>Submit</FormStyles.StyledButton>
+            {loginError && (
+              <FormStyles.ErrorParagraph>Błędny login lub hasło</FormStyles.ErrorParagraph>
+            )}
           </StyledForm>
         )}
       </Formik>

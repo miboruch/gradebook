@@ -8,6 +8,7 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import Input from '../../atoms/Input/Input';
 import { addStudentGrade } from '../../../actions/studentActions';
 import { NewGradeSchema } from '../../../utils/schemaValidation';
+import * as FormStyles from '../../../style/sharedStyles';
 
 const StyledGradeWrapper = styled.section`
   width: 100%;
@@ -38,41 +39,6 @@ const StyledForm = styled(Form)`
   }
 `;
 
-const StyledHeading = styled.h1`
-  font-size: 52px;
-  letter-spacing: 1px;
-  color: #2d2d2d;
-  text-align: center;
-`;
-
-const StyledButton = styled.button`
-  width: 250px;
-  height: 40px;
-  margin-top: 3rem;
-  border: none;
-  background-color: #2eae83;
-  color: #fff;
-  font-family: 'Gilroy';
-  font-size: 14px;
-  letter-spacing: 2px;
-  font-weight: 500;
-  border-radius: 20px;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const ErrorParagraph = styled.p`
-  font-size: 11px;
-  color: tomato;
-`;
-
-const SuccessParagraph = styled(ErrorParagraph)`
-  color: ${({ theme }) => theme.color.main};
-`;
-
 const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, studentInfo }) => {
   const [isSuccess, setSuccess] = useState(false);
   return (
@@ -93,7 +59,9 @@ const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, stud
       >
         {({ values, handleChange, handleBlur, errors }) => (
           <StyledForm>
-            <StyledHeading>Dodaj ocenę dla {studentInfo.albumNo}</StyledHeading>
+            <FormStyles.StyledHeading>
+              Dodaj ocenę dla {studentInfo.albumNo}
+            </FormStyles.StyledHeading>
             <Input
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -113,12 +81,14 @@ const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, stud
               name={'subject'}
               placeholder={'Przedmiot'}
             />
-            <StyledButton>Dodaj</StyledButton>
+            <FormStyles.StyledButton>Dodaj</FormStyles.StyledButton>
             {(errors.grade || errors.subject) && (
-              <ErrorParagraph>Dane są niepoprawne</ErrorParagraph>
+              <FormStyles.ErrorParagraph>Dane są niepoprawne</FormStyles.ErrorParagraph>
             )}
-            {addGradeError && <ErrorParagraph>Problem z dodaniem oceny</ErrorParagraph>}
-            {isSuccess && <SuccessParagraph>Dodano</SuccessParagraph>}
+            {addGradeError && (
+              <FormStyles.ErrorParagraph>Problem z dodaniem oceny</FormStyles.ErrorParagraph>
+            )}
+            {isSuccess && <FormStyles.SuccessParagraph>Dodano</FormStyles.SuccessParagraph>}
           </StyledForm>
         )}
       </Formik>
