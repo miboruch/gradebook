@@ -3,13 +3,18 @@ export const SET_STUDENT_INFO = 'SET_STUDENT_INFO';
 export const SET_STUDENT_INFO_ERROR = 'SET_STUDENT_INFO_ERROR';
 export const SET_STUDENT_GRADES = 'SET_STUDENT_GRADES';
 export const SET_STUDENT_GRADES_ERROR = 'SET_STUDENT_GRADES_ERROR';
+export const ADD_GRADE_START = 'ADD_GRADE_START';
+export const ADD_GRADE_ERROR = 'ADD_GRADE_ERROR';
+export const ADD_GRADE_SUCCESS = 'ADD_GRADE_SUCCESS';
 
 const initialState = {
   isLoading: false,
   studentInfo: null,
   studentInfoError: null,
   studentGrades: null,
-  studentGradesError: null
+  studentGradesError: null,
+  addGradeError: null,
+  addGradeSuccess: false
 };
 
 export const studentReducer = (state = initialState, action) => {
@@ -45,6 +50,24 @@ export const studentReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         studentGradesError: action.payload
+      };
+    case ADD_GRADE_START:
+      return {
+        ...state,
+        addGradeError: null,
+        addGradeSuccess: false
+      };
+    case ADD_GRADE_ERROR:
+      return {
+        ...state,
+        addGradeError: action.payload,
+        addGradeSuccess: false
+      };
+    case ADD_GRADE_SUCCESS:
+      return {
+        ...state,
+        addGradeSuccess: true,
+        addGradeError: null
       };
     default:
       return state;

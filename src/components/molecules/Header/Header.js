@@ -23,7 +23,6 @@ const StyledHeader = styled.header`
 `;
 
 const Wrapper = styled.div`
-  //margin-top: 2.5rem;
   ${({ theme }) => theme.mq.standard} {
     display: block;
   }

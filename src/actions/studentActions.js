@@ -4,7 +4,10 @@ import {
   SET_STUDENT_INFO,
   SET_STUDENT_INFO_ERROR,
   SET_STUDENT_GRADES,
-  SET_STUDENT_GRADES_ERROR
+  SET_STUDENT_GRADES_ERROR,
+  ADD_GRADE_START,
+  ADD_GRADE_SUCCESS,
+  ADD_GRADE_ERROR
 } from '../reducers/studentReducer';
 import { API_URL } from '../utils/helpers';
 
@@ -42,6 +45,25 @@ const setStudentGradesError = (error) => {
   };
 };
 
+const addGradeStart = () => {
+  return {
+    type: ADD_GRADE_START
+  };
+};
+
+const addGradeSuccess = () => {
+  return {
+    type: ADD_GRADE_SUCCESS
+  };
+};
+
+const addGradeError = (error) => {
+  return {
+    type: ADD_GRADE_ERROR,
+    payload: error
+  };
+};
+
 export const getStudentInfo = (userID) => async (dispatch) => {
   dispatch(fetchStart());
   try {
@@ -60,5 +82,27 @@ export const getStudentGrades = (userID) => async (dispatch) => {
     dispatch(setStudentGrades(data));
   } catch (error) {
     dispatch(setStudentGradesError(error));
+  }
+};
+
+export const addStudentGrade = (token, subject, grade, studentId) => async (dispatch) => {
+  dispatch(addGradeStart());
+  try {
+    await axios.post(
+      `${API_URL}/grades/addGrade`,
+      {
+        subject,
+        grade,
+        studentId
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    dispatch(addGradeSuccess());
+    dispatch(getStudentGrades(studentId));
+  } catch (error) {
+    dispatch(addGradeError(error));
   }
 };

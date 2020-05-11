@@ -22,7 +22,6 @@ const StyledButton = styled.button`
   align-items: center;
   flex-direction: row;
   cursor: pointer;
-  padding-left: 4rem;
   margin-bottom: 2rem;
   z-index: 7;
   -webkit-box-shadow: 2px 2px 6px 0px rgba(4, 138, 131, 1);
@@ -65,9 +64,9 @@ const StyledButton = styled.button`
     !isMenuButton &&
     css`
       border: none;
-      -webkit-box-shadow: 2px 2px 6px 0px rgba(25, 21, 22, 1);
-      -moz-box-shadow: 2px 2px 6px 0px rgba(25, 21, 22, 1);
-      box-shadow: 2px 2px 6px 0px rgba(25, 21, 22, 1);
+      -webkit-box-shadow: 2px 2px 6px 0px rgba(55, 51, 52, 0.7);
+      -moz-box-shadow: 2px 2px 6px 0px rgba(55, 51, 52, 0.7);
+      box-shadow: 2px 2px 6px 0px rgba(55, 51, 52, 0.7);
     `}
   
   &:focus {

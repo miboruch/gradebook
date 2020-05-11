@@ -13,7 +13,14 @@ import StudentInfoPage from './pages/StudentInfoPage';
 import UniversityStudentsPage from './pages/UniversityStudentsPage';
 import { getUniversities, getUniversityCourses } from './actions/universityActions';
 
-const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading, getUniversityCourses, getUniversities}) => {
+const App = ({
+  authenticationCheck,
+  isLoggedIn,
+  userInfo,
+  isLoading,
+  getUniversityCourses,
+  getUniversities
+}) => {
   useEffect(() => {
     authenticationCheck();
     getUniversityCourses();
@@ -30,11 +37,11 @@ const App = ({ authenticationCheck, isLoggedIn, userInfo, isLoading, getUniversi
             <>
               {isLoggedIn ? (
                 <>
-                  <Route path={'/student/:id'} component={StudentPage} />
                   {userInfo && userInfo.admin ? (
                     <>
                       <Route exact path={'/'} component={UniversitiesPage} />
                       <Route exact path={'/university/:id'} component={UniversityStudentsPage} />
+                      <Route path={'/student/:id'} component={StudentPage} />
                     </>
                   ) : (
                     <>
