@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import Input from '../../atoms/Input/Input';
 import LoginScene from '../../atoms/LoginScene/LoginScene';
 import { userLogin } from '../../../actions/authenticationActions';
+import { LoginSchema } from '../../../utils/schemaValidation';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -65,6 +66,7 @@ const LoginBox = ({ history, userLogin, loginError }) => {
           userLogin(values, history);
           resetForm();
         }}
+        validationSchema={LoginSchema}
       >
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>

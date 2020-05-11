@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import Input from '../../atoms/Input/Input';
 import { addStudentGrade } from '../../../actions/studentActions';
+import { NewGradeSchema } from '../../../utils/schemaValidation';
 
 const StyledGradeWrapper = styled.section`
   width: 100%;
@@ -41,6 +42,7 @@ const StyledHeading = styled.h1`
   font-size: 52px;
   letter-spacing: 1px;
   color: #2d2d2d;
+  text-align: center;
 `;
 
 const StyledButton = styled.button`
@@ -56,6 +58,10 @@ const StyledButton = styled.button`
   font-weight: 500;
   border-radius: 20px;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const ErrorParagraph = styled.p`
@@ -63,24 +69,38 @@ const ErrorParagraph = styled.p`
   color: tomato;
 `;
 
+const SuccessParagraph = styled(ErrorParagraph)`
+  color: ${({ theme }) => theme.color.main};
+`;
+
 const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, studentInfo }) => {
+  const [isSuccess, setSuccess] = useState(false);
   return (
     <StyledGradeWrapper isOpen={isOpen}>
       <CloseButton setBoxState={setOpen} />
       <Formik
         initialValues={{ grade: null, subject: '' }}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 2000);
+
+          addStudentGrade(token, values.subject, values.grade, studentInfo.userId);
           resetForm();
         }}
+        validationSchema={NewGradeSchema}
       >
-        {({ values, handleChange, handleBlur }) => (
+        {({ values, handleChange, handleBlur, errors }) => (
           <StyledForm>
             <StyledHeading>Dodaj ocenę dla {studentInfo.albumNo}</StyledHeading>
             <Input
               handleChange={handleChange}
               handleBlur={handleBlur}
               type={'number'}
+              step={0.5}
+              min={2}
+              max={5}
               value={values.grade}
               name={'grade'}
               placeholder={'Ocena'}
@@ -94,7 +114,11 @@ const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, stud
               placeholder={'Przedmiot'}
             />
             <StyledButton>Dodaj</StyledButton>
+            {(errors.grade || errors.subject) && (
+              <ErrorParagraph>Dane są niepoprawne</ErrorParagraph>
+            )}
             {addGradeError && <ErrorParagraph>Problem z dodaniem oceny</ErrorParagraph>}
+            {isSuccess && <SuccessParagraph>Dodano</SuccessParagraph>}
           </StyledForm>
         )}
       </Formik>

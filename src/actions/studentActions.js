@@ -96,7 +96,7 @@ export const addStudentGrade = (token, subject, grade, studentId) => async (disp
         studentId
       },
       {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { authorization: `Bearer ${token}` }
       }
     );
 

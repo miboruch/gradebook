@@ -44,7 +44,18 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ type, value, name, handleChange, handleBlur, placeholder, isSearch }) => {
+const Input = ({
+  type,
+  value,
+  name,
+  handleChange,
+  handleBlur,
+  placeholder,
+  isSearch,
+  step,
+  min,
+  max
+}) => {
   return (
     <InputWrapper isSearch={isSearch}>
       <StyledInput
@@ -53,7 +64,10 @@ const Input = ({ type, value, name, handleChange, handleBlur, placeholder, isSea
         onBlur={handleBlur}
         value={value}
         name={name}
+        min={min}
+        max={max}
         placeholder={placeholder}
+        step={step}
       />
     </InputWrapper>
   );
@@ -66,7 +80,10 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func,
   placeholder: PropTypes.string,
-  isSearch: PropTypes.bool
+  isSearch: PropTypes.bool,
+  step: PropTypes.number,
+  min: PropTypes.number,
+  max: PropTypes.number
 };
 
 export default Input;
