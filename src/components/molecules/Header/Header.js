@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Input from '../../atoms/Input/Input';
 import ChartIcon from '../../../assets/icons/chart.svg';
 
 const StyledHeader = styled.header`
@@ -24,7 +23,7 @@ const StyledHeader = styled.header`
 `;
 
 const Wrapper = styled.div`
-  margin-top: 2.5rem;
+  //margin-top: 2.5rem;
   ${({ theme }) => theme.mq.standard} {
     display: block;
   }
@@ -75,12 +74,10 @@ const StyledChatIcon = styled(ChartIcon)`
   transform: translateY(-50%);
 `;
 
-const Header = ({ handleChange }) => {
+const Header = ({ children }) => {
   return (
     <StyledHeader>
-      <Wrapper>
-        {handleChange && <Input name={'filter'} handleChange={handleChange} type={'text'} />}
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
       <StyledContentWrapper>
         <StyledInfoBox>
           <StyledParagraph>Państwowa Wyższa Szkoła Zawodowa w Tarnowie</StyledParagraph>
@@ -92,7 +89,7 @@ const Header = ({ handleChange }) => {
 };
 
 Header.propTypes = {
-  handleChange: PropTypes.func
+  children: PropTypes.node
 };
 
 export default Header;

@@ -20,6 +20,10 @@ const StudentGradesTable = ({ data }) => {
         Header: 'Data',
         accessor: 'date',
         Cell: (e) => `${new Date(e.value).toLocaleDateString()}`
+      },
+      {
+        Header: 'Przedmiot',
+        accessor: 'subject'
       }
     ],
     []

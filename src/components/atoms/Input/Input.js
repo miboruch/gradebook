@@ -11,7 +11,7 @@ const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: ${({ isSearch }) => (isSearch ? '0' : '2rem')};
   flex-direction: row;
   border-radius: 20px;
   transition: all 0.4s ease;
@@ -44,9 +44,9 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ type, value, name, handleChange, handleBlur, placeholder }) => {
+const Input = ({ type, value, name, handleChange, handleBlur, placeholder, isSearch }) => {
   return (
-    <InputWrapper>
+    <InputWrapper isSearch={isSearch}>
       <StyledInput
         type={type}
         onChange={handleChange}
@@ -65,7 +65,8 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  isSearch: PropTypes.bool
 };
 
 export default Input;
