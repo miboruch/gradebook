@@ -47,11 +47,6 @@ const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, stud
       <Formik
         initialValues={{ grade: null, subject: '' }}
         onSubmit={(values, { resetForm }) => {
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(false);
-          }, 2000);
-
           addStudentGrade(token, values.subject, values.grade, studentInfo.userId);
           resetForm();
         }}

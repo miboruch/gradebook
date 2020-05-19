@@ -4,6 +4,7 @@ export const StyledHeading = styled.h1`
   font-size: 52px;
   letter-spacing: 1px;
   color: #2d2d2d;
+  text-align: center;
 `;
 
 export const StyledButton = styled.button`

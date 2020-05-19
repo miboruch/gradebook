@@ -78,6 +78,7 @@ export const getStudentInfo = (userID) => async (dispatch) => {
 export const getStudentGrades = (userID) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${API_URL}/grades/findStudentGrades/${userID}`);
+    console.log(data);
 
     dispatch(setStudentGrades(data));
   } catch (error) {
@@ -86,6 +87,10 @@ export const getStudentGrades = (userID) => async (dispatch) => {
 };
 
 export const addStudentGrade = (token, subject, grade, studentId) => async (dispatch) => {
+  console.log(`TOKEN: ${token}`);
+  console.log(`SUBJECT: ${subject}`);
+  console.log(`GRADE: ${grade}`);
+  console.log(`STUDENT ID: ${studentId}`);
   dispatch(addGradeStart());
   try {
     await axios.post(
@@ -96,7 +101,9 @@ export const addStudentGrade = (token, subject, grade, studentId) => async (disp
         studentId
       },
       {
-        headers: { authorization: `Bearer ${token}` }
+        headers: {
+          'auth-token': token
+        }
       }
     );
 

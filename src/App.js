@@ -46,6 +46,7 @@ const App = ({
                   ) : (
                     <>
                       <Route exact path={'/'} component={StudentInfoPage} />
+                      <Route path={'/student/:id'} component={StudentPage} />
                     </>
                   )}
                 </>
