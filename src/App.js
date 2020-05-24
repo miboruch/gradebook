@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
@@ -44,10 +44,7 @@ const App = ({
                       <Route path={'/student/:id'} component={StudentPage} />
                     </>
                   ) : (
-                    <>
-                      <Route exact path={'/'} component={StudentInfoPage} />
-                      <Route path={'/student/:id'} component={StudentPage} />
-                    </>
+                    <Route exact path={'/'} component={StudentInfoPage} />
                   )}
                 </>
               ) : (

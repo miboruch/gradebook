@@ -25,7 +25,7 @@ export const StyledTable = styled.table`
   font-size: 13px;
 
   ${({ theme }) => theme.mq.standard} {
-    font-size: ${({ isStudentInfoPage }) => (isStudentInfoPage ? '20px' : '14px')};
+    font-size: ${({ isStudentInfoPage }) => (isStudentInfoPage ? '16px' : '14px')};
   }
 `;
 

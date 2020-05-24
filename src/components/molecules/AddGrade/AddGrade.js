@@ -49,6 +49,7 @@ const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, stud
         onSubmit={(values, { resetForm }) => {
           addStudentGrade(token, values.subject, values.grade, studentInfo.userId);
           resetForm();
+          setOpen(false);
         }}
         validationSchema={NewGradeSchema}
       >

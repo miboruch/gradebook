@@ -11,7 +11,7 @@ import { ReactComponent as AddIcon } from '../assets/icons/add.svg';
 import AddGrade from '../components/molecules/AddGrade/AddGrade';
 
 const StyledWrapper = styled.div`
-  height: calc(100vh - 100px);
+  height: calc(100vh - 170px);
   display: flex;
   align-items: center;
   flex-direction: column;

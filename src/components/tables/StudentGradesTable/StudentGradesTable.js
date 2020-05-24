@@ -1,14 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as TableStyles from '../../../style/tableStyles';
 import Table from '../../molecules/Table/Table';
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/ban.svg';
 
 const StyledWrapper = styled(TableStyles.TableWrapperStyle)`
   width: 95%;
 `;
 
-const StudentGradesTable = ({ data }) => {
+const StyledDeleteIcon = styled(DeleteIcon)`
+  width: 25px;
+  height: 25px;
+  fill: tomato;
+  cursor: pointer;
+`;
+
+const StudentGradesTable = ({ data, userInfo }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -24,6 +33,11 @@ const StudentGradesTable = ({ data }) => {
       {
         Header: 'Przedmiot',
         accessor: 'subject'
+      },
+      {
+        Header: () => (userInfo.admin ? 'Usuń' : null),
+        id: 'delete',
+        Cell: (e) => <>{userInfo.admin ? <StyledDeleteIcon /> : null}</>
       }
     ],
     []
@@ -36,4 +50,8 @@ StudentGradesTable.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-export default StudentGradesTable;
+const mapStateToProps = ({ userReducer: { userInfo } }) => {
+  return { userInfo };
+};
+
+export default connect(mapStateToProps)(StudentGradesTable);

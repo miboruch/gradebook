@@ -12,6 +12,8 @@ const ButtonWrapper = styled.button`
   top: 1rem;
   right: 1rem;
   margin: 0 0.5rem;
+  z-index: 10;
+
   :focus {
     outline: none;
   }
