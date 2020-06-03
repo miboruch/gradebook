@@ -20,6 +20,10 @@ export const StyledButton = styled.button`
   font-weight: 500;
   border-radius: 20px;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ErrorParagraph = styled.p`

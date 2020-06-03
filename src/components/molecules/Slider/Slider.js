@@ -156,7 +156,7 @@ const StyledProjectLink = styled(Link)`
   color: #fff;
 `;
 
-const LogoutButtonWrapper = styled.div`
+const BottomButtonWrapper = styled.div`
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -209,21 +209,21 @@ const Slider = ({ isMenuOpen, isLoggedIn, userInfo, history, userLogout, toggleM
               </StyledProjectLink>
             )}
           </ButtonWrapper>
-          <LogoutButtonWrapper>
+          <BottomButtonWrapper>
             <Button isMenu={true} onClick={() => userLogout(history)}>
               Wyloguj
             </Button>
-          </LogoutButtonWrapper>
+          </BottomButtonWrapper>
         </>
       ) : (
-        <ButtonWrapper>
+        <BottomButtonWrapper>
           <StyledProjectLink to={'/login'}>
             <Button isMenu={true}>
               <StyledClipboardIcon />
               Zaloguj się
             </Button>
           </StyledProjectLink>
-        </ButtonWrapper>
+        </BottomButtonWrapper>
       )}
     </StyledWrapper>
   );
