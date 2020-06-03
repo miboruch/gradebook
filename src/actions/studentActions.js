@@ -7,7 +7,8 @@ import {
   SET_STUDENT_GRADES_ERROR,
   ADD_GRADE_START,
   ADD_GRADE_SUCCESS,
-  ADD_GRADE_ERROR
+  ADD_GRADE_ERROR,
+  STOP_DELETE_GRADE
 } from '../reducers/studentReducer';
 import { API_URL } from '../utils/helpers';
 
@@ -64,6 +65,12 @@ const addGradeError = (error) => {
   };
 };
 
+const stopDeleteGrade = () => {
+  return {
+    type: STOP_DELETE_GRADE
+  };
+};
+
 export const getStudentInfo = (userID) => async (dispatch) => {
   dispatch(fetchStart());
   try {
@@ -106,5 +113,17 @@ export const addStudentGrade = (token, subject, grade, studentId) => async (disp
     dispatch(getStudentGrades(studentId));
   } catch (error) {
     dispatch(addGradeError(error));
+  }
+};
+
+export const deleteStudentGrade = (gradeID, studentID) => async (dispatch) => {
+  dispatch(fetchStart());
+  try {
+    await axios.delete(`${API_URL}/grades/deleteGrade/${gradeID}`);
+
+    dispatch(stopDeleteGrade());
+    dispatch(getStudentGrades(studentID));
+  } catch (error) {
+    dispatch(stopDeleteGrade());
   }
 };

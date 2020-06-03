@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import * as TableStyles from '../../../style/tableStyles';
 import Table from '../../molecules/Table/Table';
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/ban.svg';
+import { deleteStudentGrade } from '../../../actions/studentActions';
 
 const StyledWrapper = styled(TableStyles.TableWrapperStyle)`
   width: 95%;
@@ -17,7 +18,7 @@ const StyledDeleteIcon = styled(DeleteIcon)`
   cursor: pointer;
 `;
 
-const StudentGradesTable = ({ data, userInfo }) => {
+const StudentGradesTable = ({ data, userInfo, deleteStudentGrade }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -37,7 +38,17 @@ const StudentGradesTable = ({ data, userInfo }) => {
       {
         Header: () => (userInfo.admin ? 'Usuń' : null),
         id: 'delete',
-        Cell: (e) => <>{userInfo.admin ? <StyledDeleteIcon /> : null}</>
+        Cell: (e) => {
+          const gradeID = e.row.original.id;
+          const studentId = e.row.original.studentId;
+          return (
+            <>
+              {userInfo.admin ? (
+                <StyledDeleteIcon onClick={() => deleteStudentGrade(gradeID, studentId)} />
+              ) : null}
+            </>
+          );
+        }
       }
     ],
     []
@@ -54,4 +65,10 @@ const mapStateToProps = ({ userReducer: { userInfo } }) => {
   return { userInfo };
 };
 
-export default connect(mapStateToProps)(StudentGradesTable);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteStudentGrade: (gradeID, studentID) => dispatch(deleteStudentGrade(gradeID, studentID))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentGradesTable);

@@ -6,6 +6,7 @@ export const SET_STUDENT_GRADES_ERROR = 'SET_STUDENT_GRADES_ERROR';
 export const ADD_GRADE_START = 'ADD_GRADE_START';
 export const ADD_GRADE_ERROR = 'ADD_GRADE_ERROR';
 export const ADD_GRADE_SUCCESS = 'ADD_GRADE_SUCCESS';
+export const STOP_DELETE_GRADE = 'STOP_DELETE_GRADE';
 
 const initialState = {
   isLoading: false,
@@ -68,6 +69,11 @@ export const studentReducer = (state = initialState, action) => {
         ...state,
         addGradeSuccess: true,
         addGradeError: null
+      };
+    case STOP_DELETE_GRADE:
+      return {
+        ...state,
+        isLoading: false
       };
     default:
       return state;
