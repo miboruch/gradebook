@@ -1,26 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import LoginPage from './pages/LoginPage';
+import LandingPage from './pages/LandingPage';
+import StudentPage from './pages/StudentPage';
+import { authenticationCheck } from './actions/authenticationActions';
+import UniversitiesPage from './pages/UniversitiesPage';
+import Spinner from './components/atoms/Spinner/Spinner';
+import StudentInfoPage from './pages/StudentInfoPage';
+import UniversityStudentsPage from './pages/UniversityStudentsPage';
+import { getUniversities, getUniversityCourses } from './actions/universityActions';
 
-function App() {
+const App = ({
+  authenticationCheck,
+  isLoggedIn,
+  userInfo,
+  isLoading,
+  getUniversityCourses,
+  getUniversities
+}) => {
+  useEffect(() => {
+    authenticationCheck();
+    getUniversityCourses();
+    getUniversities();
+  }, []);
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Layout>
+        <Switch>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              {isLoggedIn ? (
+                <>
+                  {userInfo && userInfo.admin ? (
+                    <>
+                      <Route exact path={'/'} component={UniversitiesPage} />
+                      <Route exact path={'/university/:id'} component={UniversityStudentsPage} />
+                      <Route path={'/student/:id'} component={StudentPage} />
+                    </>
+                  ) : (
+                    <Route exact path={'/'} component={StudentInfoPage} />
+                  )}
+                </>
+              ) : (
+                <>
+                  <Route exact path={'/'} component={LandingPage} />
+                  <Route path={'/login'} component={LoginPage} />
+                </>
+              )}
+            </>
+          )}
+        </Switch>
+      </Layout>
+    </Router>
   );
-}
+};
 
-export default App;
+const mapStateToProps = ({
+  authenticationReducer: { isLoggedIn, isLoading },
+  userReducer: { userInfo }
+}) => {
+  return { isLoggedIn, userInfo, isLoading };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authenticationCheck: () => dispatch(authenticationCheck()),
+    getUniversityCourses: () => dispatch(getUniversityCourses()),
+    getUniversities: () => dispatch(getUniversities())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
