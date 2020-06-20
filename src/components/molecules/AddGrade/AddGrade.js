@@ -1,43 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import gsap from 'gsap';
 import { connect } from 'react-redux';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import Input from '../../atoms/Input/Input';
 import { addStudentGrade } from '../../../actions/studentActions';
 import { NewGradeSchema } from '../../../utils/schemaValidation';
 import * as FormStyles from '../../../style/sharedStyles';
-
-const StyledGradeWrapper = styled.section`
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 0.9);
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
-  transition: transform 1s ease;
-  z-index: 10;
-`;
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-
-  ${({ theme }) => theme.mq.tablet} {
-    width: 50%;
-  }
-`;
+import { StyledForm, StyledGradeWrapper } from './AddGrade.styles';
 
 const AddGrade = ({ isOpen, setOpen, token, addGradeError, addStudentGrade, studentInfo }) => {
   const [isSuccess, setSuccess] = useState(false);
